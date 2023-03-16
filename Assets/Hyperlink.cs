@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class Hyperlink : MonoBehaviour
 {
+    public void LinkFC()
+    {
+        Application.OpenURL("https://www.youtube.com/watch?v=Cc-JbxbdJLc");
+    }
+
+    public void LinkPP()
+    {
+        Application.OpenURL("https://drive.google.com/file/d/16W51jA64SV1kYVt1MRuSMQI4mQSAmAcw/view?usp=sharing");
+    }
+
     public void LinkTOR()
     {
         Application.OpenURL("https://drive.google.com/file/d/1-VdRJx_CBQf2QJchhC31QUrUX5HtngwM/view?usp=sharing");
