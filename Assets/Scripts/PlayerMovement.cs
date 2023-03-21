@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
@@ -43,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool movingRight = false;
     private bool movingLeft = false;
+
+    public Button phoneButton;
 
     // Start is called before the first frame update
     void Start()
@@ -136,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
             //Sign Stuff
             if ( isOnSign)
             {
-                Interact();
+                phoneButton.onClick.AddListener(Interact);
             }
         }
 
