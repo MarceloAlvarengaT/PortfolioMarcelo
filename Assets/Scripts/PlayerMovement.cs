@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
     private bool movingRight = false;
     private bool movingLeft = false;
 
+    public Button mobileButton;
+
     private bool phoneSign = false;
 
     // Start is called before the first frame update
@@ -152,7 +154,6 @@ public class PlayerMovement : MonoBehaviour
                         RightKey.SetActive(true);
                         LeftKey.SetActive(true);
                         SpaceKey.SetActive(true);
-                        phoneSign = false;
                     }
                     else
                     {
@@ -169,7 +170,6 @@ public class PlayerMovement : MonoBehaviour
                         RightKey.SetActive(true);
                         LeftKey.SetActive(true);
                         SpaceKey.SetActive(true);
-                        phoneSign = false;
                     }
                     else
                     {
@@ -295,6 +295,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void EnableSignPhone()
     {
-        phoneSign = true;
+        phoneSign = !phoneSign;
     }
 }
