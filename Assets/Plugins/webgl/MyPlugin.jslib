@@ -1,7 +1,7 @@
  var MyPlugin = {
      IsMobile: function()
      {
-         return Module.SystemInfo.mobile;
+         return UnityLoader.SystemInfo.mobile;
      }
  };
  
