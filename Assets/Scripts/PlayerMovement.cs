@@ -53,7 +53,9 @@ public class PlayerMovement : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         spaceBar.SetActive(false);
         InteractButton.SetActive(false);
-    }
+        movingRight = false;
+        movingLeft = false;
+}
 
     // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D collision)
@@ -85,31 +87,48 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKey(KeyCode.D))
+        if (!mc.isMobile())
         {
-            movingRight = true;
-            movingLeft = false;
-            MoveRight();
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            movingLeft = true;
-            movingRight = false;
-            MoveLeft();
+            if (Input.GetKey(KeyCode.D))
+            {
+                movingRight = true;
+                movingLeft = false;
+                MoveRight();
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                movingLeft = true;
+                movingRight = false;
+                MoveLeft();
+            }
+            else
+            {
+                transform.Translate(Vector2.zero, Space.Self);
+                rb.isKinematic = true;
+                playerAnimator.SetBool("Ismoving", false);
+            }
         }
         else
         {
-            movingRight = false;
-            movingLeft = false;
-            transform.Translate(Vector2.zero, Space.Self);
-            rb.isKinematic = true;
-            playerAnimator.SetBool("Ismoving", false);
+            if (movingLeft)
+            {
+                sr.flipX = true;
+                transform.Translate(Vector2.left * (Time.deltaTime * speed), Space.Self);
+                playerAnimator.SetBool("Ismoving", true);
+            }
+            else if (movingRight)
+            {
+                sr.flipX = false;
+                transform.Translate(Vector2.right * (Time.deltaTime * speed), Space.Self);
+                playerAnimator.SetBool("Ismoving", true);
+            }
+            else
+            {
+                transform.Translate(Vector2.zero, Space.Self);
+                rb.isKinematic = true;
+                playerAnimator.SetBool("Ismoving", false);
+            }
         }
-        if (mc.isMobile())
-        {
-            MobileMovement();
-        }
-
         //Sign Stuff
         if (Input.GetKeyDown(KeyCode.Space) && isOnSign)
         {
@@ -183,24 +202,6 @@ public class PlayerMovement : MonoBehaviour
     {
         movingRight = false;
     }
-    void MobileMovement()
-    {
-        if (movingLeft)
-        {
-            MoveLeft();
-        }
-        else if (movingRight)
-        {
-            MoveRight();
-        }
-        else
-        {
-            transform.Translate(Vector2.zero, Space.Self);
-            rb.isKinematic = true;
-            playerAnimator.SetBool("Ismoving", false);
-        }
-    }
-
     public void Interact()
     {
         if (!clicked)

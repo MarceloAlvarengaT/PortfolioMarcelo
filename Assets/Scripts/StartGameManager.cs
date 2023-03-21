@@ -40,7 +40,7 @@ public class StartGameManager : MonoBehaviour
 
     private void Update()
     {
-        if(mc.isMobile())
+        if (mc.isMobile())
         {
             PhoneControls.SetActive(true);
             PCControls.SetActive(false);
