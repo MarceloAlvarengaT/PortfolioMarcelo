@@ -140,7 +140,46 @@ public class PlayerMovement : MonoBehaviour
             //Sign Stuff
             if ( isOnSign && phoneSign)
             {
-                Interact();
+                if (!clicked)
+                {
+                    StartCoroutine(WaitClick());
+                    sign = signCollider.GetComponent<Sign>();
+                    StartCoroutine(sign.SignAction());
+                    if (cameraAnimator.GetBool("Pan") == true)
+                    {
+                        cameraAnimator.SetBool("Pan", false);
+                        playerAnimator.SetBool("Sign", false);
+                        RightKey.SetActive(true);
+                        LeftKey.SetActive(true);
+                        SpaceKey.SetActive(true);
+                        phoneSign = false;
+                    }
+                    else
+                    {
+                        cameraAnimator.SetBool("Pan", true);
+                        playerAnimator.SetBool("Sign", true);
+                        RightKey.SetActive(false);
+                        LeftKey.SetActive(false);
+                        SpaceKey.SetActive(false);
+                    }
+                    if (signAnimator.GetBool("PanelActive") == true)
+                    {
+                        signAnimator.SetBool("PanelActive", false);
+                        playerAnimator.SetBool("Sign", false);
+                        RightKey.SetActive(true);
+                        LeftKey.SetActive(true);
+                        SpaceKey.SetActive(true);
+                        phoneSign = false;
+                    }
+                    else
+                    {
+                        signAnimator.SetBool("PanelActive", true);
+                        playerAnimator.SetBool("Sign", true);
+                        RightKey.SetActive(false);
+                        LeftKey.SetActive(false);
+                        SpaceKey.SetActive(false);
+                    }
+                }
             }
         }
 
@@ -214,7 +253,6 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Interact()
     {
-        phoneSign = false;
         if (!clicked)
         {
             StartCoroutine(WaitClick());
