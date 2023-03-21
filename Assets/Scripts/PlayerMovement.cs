@@ -105,6 +105,10 @@ public class PlayerMovement : MonoBehaviour
             rb.isKinematic = true;
             playerAnimator.SetBool("Ismoving", false);
         }
+        if (mc.isMobile())
+        {
+            MobileMovement();
+        }
 
         //Sign Stuff
         if (Input.GetKeyDown(KeyCode.Space) && isOnSign)
@@ -151,21 +155,49 @@ public class PlayerMovement : MonoBehaviour
     }
     public void MoveRight()
     {
-         if(movingRight)
-        {
-            rb.isKinematic = false;
-            sr.flipX = false;
-            transform.Translate(Vector2.right * (Time.deltaTime * speed), Space.Self);
-            playerAnimator.SetBool("Ismoving", true);
-        }
+        rb.isKinematic = false;
+        sr.flipX = false;
+        transform.Translate(Vector2.right * (Time.deltaTime * speed), Space.Self);
+        playerAnimator.SetBool("Ismoving", true);
     }    public void MoveLeft()
     {
-        if(movingLeft)
+        rb.isKinematic = false;
+        sr.flipX = true;
+        transform.Translate(Vector2.left * (Time.deltaTime * speed), Space.Self);
+        playerAnimator.SetBool("Ismoving", true);
+    }
+
+    public void PointerDownLeft()
+    {
+        movingLeft = true;
+    }
+    public void PointerUpLeft()
+    {
+        movingLeft = false;
+    }
+    public void PointerDownRight()
+    {
+        movingRight = true;
+    }
+    public void PointerUpRight()
+    {
+        movingRight = false;
+    }
+    void MobileMovement()
+    {
+        if (movingLeft)
         {
-            rb.isKinematic = false;
-            sr.flipX = true;
-            transform.Translate(Vector2.left * (Time.deltaTime * speed), Space.Self);
-            playerAnimator.SetBool("Ismoving", true);
+            MoveLeft();
+        }
+        else if (movingRight)
+        {
+            MoveRight();
+        }
+        else
+        {
+            transform.Translate(Vector2.zero, Space.Self);
+            rb.isKinematic = true;
+            playerAnimator.SetBool("Ismoving", false);
         }
     }
 
