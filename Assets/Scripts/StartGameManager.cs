@@ -27,9 +27,29 @@ public class StartGameManager : MonoBehaviour
     public Sprite muteSprite;
     public Sprite soundSprite;
 
+    private MobileCheck mc;
+
+    public GameObject PCControls;
+    public GameObject PhoneControls;
+
     private void Start()
     {
         musicButton.image.sprite = soundSprite;
+        mc = GameObject.Find("MobileCheck").GetComponent<MobileCheck>();
+    }
+
+    private void Update()
+    {
+        if(mc.isMobile())
+        {
+            PhoneControls.SetActive(true);
+            PCControls.SetActive(false);
+        }
+        else
+        {
+            PhoneControls.SetActive(false);
+            PCControls.SetActive(true);
+        }
     }
     public void SetSpanish()
     {
@@ -63,14 +83,14 @@ public class StartGameManager : MonoBehaviour
 
     public void VolumeControl()
     {
-        if(music.volume == 1)
+        if(music.volume == 0.5)
         {
             music.volume = 0;
             musicButton.image.sprite = muteSprite;
         }
         else if(music.volume == 0)
         {
-            music.volume = 1;
+            music.volume = 0.5f;
             musicButton.image.sprite = soundSprite;
         }
     }

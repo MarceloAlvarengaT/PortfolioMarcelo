@@ -32,18 +32,23 @@ public class PlayerMovement : MonoBehaviour
     public GameObject RightKey;
     public GameObject LeftKey;
     public GameObject SpaceKey;
+    public GameObject InteractButton;
 
     private SpriteRenderer sr;
 
     private StartGameManager startGameManager;
 
+    private MobileCheck mc;
+
     // Start is called before the first frame update
     void Start()
     {
         startGameManager = GameObject.Find("StartGameManager").GetComponent<StartGameManager>();
+        mc = GameObject.Find("MobileCheck").GetComponent<MobileCheck>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         spaceBar.SetActive(false);
+        InteractButton.SetActive(false);
     }
 
     // Update is called once per frame
@@ -54,7 +59,14 @@ public class PlayerMovement : MonoBehaviour
         {
             signCollider = collision;
         }
-        spaceBar.SetActive(true);
+        if (mc.isMobile())
+        {
+            InteractButton.SetActive(true);
+        }
+        else
+        {
+            spaceBar.SetActive(true);
+        }
         if (startGameManager.IsSpanish)
         {
             signAnimator = collision.GetComponent<Sign>().PanelSpanish.GetComponent<Animator>();
@@ -69,17 +81,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
-            rb.isKinematic = false;
-            sr.flipX = false;
-            transform.Translate(Vector2.right * (Time.deltaTime * speed), Space.Self);
-            playerAnimator.SetBool("Ismoving", true);
+            MoveRight();
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            rb.isKinematic = false;
-            sr.flipX = true;
-            transform.Translate(Vector2.left * (Time.deltaTime * speed), Space.Self);
-            playerAnimator.SetBool("Ismoving", true);
+            MoveLeft();
         }
         else
         {
@@ -91,44 +97,7 @@ public class PlayerMovement : MonoBehaviour
         //Sign Stuff
         if (Input.GetKeyDown(KeyCode.Space) && isOnSign)
         {
-            if (!clicked)
-            {
-                StartCoroutine(WaitClick());
-                sign = signCollider.GetComponent<Sign>();
-                StartCoroutine(sign.SignAction());
-                if (cameraAnimator.GetBool("Pan") == true)
-                {
-                    cameraAnimator.SetBool("Pan", false);
-                    playerAnimator.SetBool("Sign", false);
-                    RightKey.SetActive(true);
-                    LeftKey.SetActive(true);
-                    SpaceKey.SetActive(true);
-                }
-                else
-                {
-                    cameraAnimator.SetBool("Pan", true);
-                    playerAnimator.SetBool("Sign", true);
-                    RightKey.SetActive(false);
-                    LeftKey.SetActive(false);
-                    SpaceKey.SetActive(false);
-                }
-                if (signAnimator.GetBool("PanelActive") == true)
-                {
-                    signAnimator.SetBool("PanelActive", false);
-                    playerAnimator.SetBool("Sign", false);
-                    RightKey.SetActive(true);
-                    LeftKey.SetActive(true);
-                    SpaceKey.SetActive(true);
-                }
-                else
-                {
-                    signAnimator.SetBool("PanelActive", true);
-                    playerAnimator.SetBool("Sign", true);
-                    RightKey.SetActive(false);
-                    LeftKey.SetActive(false);
-                    SpaceKey.SetActive(false);
-                }
-            }
+            Interact();
         }
     }
 
@@ -160,5 +129,59 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
         clicked = false;
     }
+    public void MoveRight()
+    {
+        rb.isKinematic = false;
+        sr.flipX = false;
+        transform.Translate(Vector2.right * (Time.deltaTime * speed), Space.Self);
+        playerAnimator.SetBool("Ismoving", true);
+    }    public void MoveLeft()
+    {
+        rb.isKinematic = false;
+        sr.flipX = true;
+        transform.Translate(Vector2.left * (Time.deltaTime * speed), Space.Self);
+        playerAnimator.SetBool("Ismoving", true);
+    }
 
+    public void Interact()
+    {
+        if (!clicked)
+        {
+            StartCoroutine(WaitClick());
+            sign = signCollider.GetComponent<Sign>();
+            StartCoroutine(sign.SignAction());
+            if (cameraAnimator.GetBool("Pan") == true)
+            {
+                cameraAnimator.SetBool("Pan", false);
+                playerAnimator.SetBool("Sign", false);
+                RightKey.SetActive(true);
+                LeftKey.SetActive(true);
+                SpaceKey.SetActive(true);
+            }
+            else
+            {
+                cameraAnimator.SetBool("Pan", true);
+                playerAnimator.SetBool("Sign", true);
+                RightKey.SetActive(false);
+                LeftKey.SetActive(false);
+                SpaceKey.SetActive(false);
+            }
+            if (signAnimator.GetBool("PanelActive") == true)
+            {
+                signAnimator.SetBool("PanelActive", false);
+                playerAnimator.SetBool("Sign", false);
+                RightKey.SetActive(true);
+                LeftKey.SetActive(true);
+                SpaceKey.SetActive(true);
+            }
+            else
+            {
+                signAnimator.SetBool("PanelActive", true);
+                playerAnimator.SetBool("Sign", true);
+                RightKey.SetActive(false);
+                LeftKey.SetActive(false);
+                SpaceKey.SetActive(false);
+            }
+        }
+    }
 }
