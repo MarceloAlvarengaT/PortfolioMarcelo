@@ -107,6 +107,11 @@ public class PlayerMovement : MonoBehaviour
                 rb.isKinematic = true;
                 playerAnimator.SetBool("Ismoving", false);
             }
+            //Sign Stuff
+            if (Input.GetKeyDown(KeyCode.Space) && isOnSign)
+            {
+                Interact();
+            }
         }
         else
         {
@@ -128,12 +133,13 @@ public class PlayerMovement : MonoBehaviour
                 rb.isKinematic = true;
                 playerAnimator.SetBool("Ismoving", false);
             }
+            //Sign Stuff
+            if ( isOnSign)
+            {
+                Interact();
+            }
         }
-        //Sign Stuff
-        if (Input.GetKeyDown(KeyCode.Space) && isOnSign)
-        {
-            Interact();
-        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
