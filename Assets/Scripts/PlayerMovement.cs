@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     private bool movingRight = false;
     private bool movingLeft = false;
 
-    public Button phoneButton;
+    private bool phoneSign = false;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         InteractButton.SetActive(false);
         movingRight = false;
         movingLeft = false;
+        phoneSign = false;
 }
 
     // Update is called once per frame
@@ -137,9 +138,9 @@ public class PlayerMovement : MonoBehaviour
                 playerAnimator.SetBool("Ismoving", false);
             }
             //Sign Stuff
-            if ( isOnSign)
+            if ( isOnSign && phoneSign)
             {
-                phoneButton.onClick.AddListener(Interact);
+                Interact();
             }
         }
 
@@ -213,6 +214,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Interact()
     {
+        phoneSign = false;
         if (!clicked)
         {
             StartCoroutine(WaitClick());
@@ -251,5 +253,10 @@ public class PlayerMovement : MonoBehaviour
                 SpaceKey.SetActive(false);
             }
         }
+    }
+
+    public void EnableSignPhone()
+    {
+        phoneSign = true;
     }
 }

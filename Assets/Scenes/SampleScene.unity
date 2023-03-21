@@ -17743,7 +17743,7 @@ MonoBehaviour:
   cameraAnimator: {fileID: 519420033}
   signAnimator: {fileID: 0}
   spaceAnimator: {fileID: 670988115}
-  interactAnimator: {fileID: 0}
+  interactAnimator: {fileID: 336474569}
   spaceBar: {fileID: 670988114}
   RightKey: {fileID: 566241816}
   LeftKey: {fileID: 444987925}
