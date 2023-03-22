@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
     public Animator signAnimator;
 
     public Animator spaceAnimator;
-    public Animator interactAnimator;
 
     private Sign sign;
 
@@ -34,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
     public GameObject RightKey;
     public GameObject LeftKey;
     public GameObject SpaceKey;
-    public GameObject InteractButton;
 
     private SpriteRenderer sr;
 
@@ -47,8 +45,6 @@ public class PlayerMovement : MonoBehaviour
 
     public Button mobileButton;
 
-    private bool phoneSign = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -57,10 +53,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         spaceBar.SetActive(false);
-        InteractButton.SetActive(false);
         movingRight = false;
         movingLeft = false;
-        phoneSign = false;
 }
 
     // Update is called once per frame
@@ -73,8 +67,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (mc.isMobile())
         {
-            InteractButton.SetActive(true);
-            interactAnimator.SetBool("MobileInteract", true);
+            EnableSignPhone();
         }
         else
         {
@@ -148,8 +141,7 @@ public class PlayerMovement : MonoBehaviour
         isOnSign = false;
         if (mc.isMobile())
         {
-            interactAnimator.SetBool("MobileInteract", false);
-            InteractButton.SetActive(false);
+            DisableSignPhone();
         }
         else
         {
@@ -253,31 +245,32 @@ public class PlayerMovement : MonoBehaviour
 
     public void EnableSignPhone()
     {
-        if (!clicked)
+        sign = signCollider.GetComponent<Sign>();
+        StartCoroutine(sign.SignAction());
+        if (cameraAnimator.GetBool("Pan") == false)
         {
-            StartCoroutine(WaitClick());
-            sign = signCollider.GetComponent<Sign>();
-            StartCoroutine(sign.SignAction());
-            if (cameraAnimator.GetBool("Pan") == true)
-            {
-                cameraAnimator.SetBool("Pan", false);
-                playerAnimator.SetBool("Sign", false);
-            }
-            else
-            {
-                cameraAnimator.SetBool("Pan", true);
-                playerAnimator.SetBool("Sign", true);
-            }
-            if (signAnimator.GetBool("PanelActive") == true)
-            {
-                signAnimator.SetBool("PanelActive", false);
-                playerAnimator.SetBool("Sign", false);
-            }
-            else
-            {
-                signAnimator.SetBool("PanelActive", true);
-                playerAnimator.SetBool("Sign", true);
-            }
+            cameraAnimator.SetBool("Pan", true);
+            playerAnimator.SetBool("Sign", true);
+        }
+        if (signAnimator.GetBool("PanelActive") == false)
+        {
+            signAnimator.SetBool("PanelActive", true);
+            playerAnimator.SetBool("Sign", true);
+        }
+    }    
+    public void DisableSignPhone()
+    {
+        sign = signCollider.GetComponent<Sign>();
+        StartCoroutine(sign.SignAction());
+        if (cameraAnimator.GetBool("Pan") == true)
+        {
+            cameraAnimator.SetBool("Pan", false);
+            playerAnimator.SetBool("Sign", false);
+        }
+        if (signAnimator.GetBool("PanelActive") == true)
+        {
+            signAnimator.SetBool("PanelActive", false);
+            playerAnimator.SetBool("Sign", false);
         }
     }
 }
