@@ -8,40 +8,76 @@ public class Sign : MonoBehaviour
     public GameObject PanelSpanish;
     public GameObject PanelEnglish;
     private StartGameManager startGameManager;
+    private MobileCheck mc;
 
     private void Start()
     {
         startGameManager = GameObject.Find("StartGameManager").GetComponent<StartGameManager>();
+        mc = GameObject.Find("MobileCheck").GetComponent<MobileCheck>();
     }
 
     public IEnumerator SignAction()
     {
-        if (startGameManager.IsSpanish)
+        if (mc.isMobile())
         {
-            if (!isActive)
+            if (startGameManager.IsSpanish)
             {
-                isActive = true;
-                PanelSpanish.SetActive(true);
+                if (!isActive)
+                {
+                    isActive = true;
+                    PanelSpanish.SetActive(true);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(2f);
+                    isActive = false;
+                    PanelSpanish.SetActive(false);
+                }
             }
             else
             {
-                yield return new WaitForSeconds(2f);
-                isActive = false;
-                PanelSpanish.SetActive(false);
+                if (!isActive)
+                {
+                    isActive = true;
+                    PanelEnglish.SetActive(true);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(2f);
+                    isActive = false;
+                    PanelEnglish.SetActive(false);
+                }
             }
         }
         else
         {
-            if (!isActive)
+            if (startGameManager.IsSpanish)
             {
-                isActive = true;
-                PanelEnglish.SetActive(true);
+                if (!isActive)
+                {
+                    isActive = true;
+                    PanelSpanish.SetActive(true);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(2f);
+                    isActive = false;
+                    PanelSpanish.SetActive(false);
+                }
             }
             else
             {
-                yield return new WaitForSeconds(2f);
-                isActive = false;
-                PanelEnglish.SetActive(false);
+                if (!isActive)
+                {
+                    isActive = true;
+                    PanelEnglish.SetActive(true);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(2f);
+                    isActive = false;
+                    PanelEnglish.SetActive(false);
+                }
             }
         }
 
