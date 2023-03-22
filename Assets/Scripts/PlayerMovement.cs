@@ -45,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
 
     public Button mobileButton;
 
+    private bool firstTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         spaceBar.SetActive(false);
         movingRight = false;
         movingLeft = false;
+        firstTime = true;
 }
 
     // Update is called once per frame
@@ -65,11 +68,7 @@ public class PlayerMovement : MonoBehaviour
         {
             signCollider = collision;
         }
-        if (mc.isMobile())
-        {
-
-        }
-        else
+        if (!mc.isMobile())
         {
             spaceBar.SetActive(true);
             spaceAnimator.SetBool("SignSpace", true);
@@ -134,8 +133,9 @@ public class PlayerMovement : MonoBehaviour
                 rb.isKinematic = true;
                 playerAnimator.SetBool("Ismoving", false);
             }
-            if (isOnSign)
+            if (isOnSign && firstTime)
             {
+                firstTime = false;
                 sign = signCollider.GetComponent<Sign>();
                 StartCoroutine(sign.SignAction());
                 if (cameraAnimator.GetBool("Pan") == false)
@@ -149,8 +149,9 @@ public class PlayerMovement : MonoBehaviour
                     playerAnimator.SetBool("Sign", true);
                 }
             }
-            else
+            else if(!isOnSign)
             {
+                firstTime = true;
                 sign = signCollider.GetComponent<Sign>();
                 StartCoroutine(sign.SignAction());
                 if (cameraAnimator.GetBool("Pan") == true)
@@ -171,11 +172,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         isOnSign = false;
-        if (mc.isMobile())
-        {
-
-        }
-        else
+        if (!mc.isMobile())
         {
             spaceAnimator.SetBool("SignSpace", false);
             spaceBar.SetActive(false);
