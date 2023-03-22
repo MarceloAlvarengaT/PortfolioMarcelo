@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
         {
             sign = signCollider.GetComponent<Sign>();
             StartCoroutine(sign.SignAction());
-            sign.isActive = true;
+            sign.isActive = false;
             if (cameraAnimator.GetBool("Pan") == false)
             {
                 cameraAnimator.SetBool("Pan", true);
@@ -155,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
         {
             sign = signCollider.GetComponent<Sign>();
             StartCoroutine(sign.SignAction());
-            sign.isActive = false;
+            sign.isActive = true;
             if (cameraAnimator.GetBool("Pan") == true)
             {
                 cameraAnimator.SetBool("Pan", false);
