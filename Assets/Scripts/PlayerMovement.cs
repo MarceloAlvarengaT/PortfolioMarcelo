@@ -67,7 +67,18 @@ public class PlayerMovement : MonoBehaviour
         }
         if (mc.isMobile())
         {
-            EnableSignPhone();
+            sign = signCollider.GetComponent<Sign>();
+            StartCoroutine(sign.SignAction());
+            if (cameraAnimator.GetBool("Pan") == false)
+            {
+                cameraAnimator.SetBool("Pan", true);
+                playerAnimator.SetBool("Sign", true);
+            }
+            if (signAnimator.GetBool("PanelActive") == false)
+            {
+                signAnimator.SetBool("PanelActive", true);
+                playerAnimator.SetBool("Sign", true);
+            }
         }
         else
         {
@@ -141,7 +152,18 @@ public class PlayerMovement : MonoBehaviour
         isOnSign = false;
         if (mc.isMobile())
         {
-            DisableSignPhone();
+            sign = signCollider.GetComponent<Sign>();
+            StartCoroutine(sign.SignAction());
+            if (cameraAnimator.GetBool("Pan") == true)
+            {
+                cameraAnimator.SetBool("Pan", false);
+                playerAnimator.SetBool("Sign", false);
+            }
+            if (signAnimator.GetBool("PanelActive") == true)
+            {
+                signAnimator.SetBool("PanelActive", false);
+                playerAnimator.SetBool("Sign", false);
+            }
         }
         else
         {
@@ -240,37 +262,6 @@ public class PlayerMovement : MonoBehaviour
                 LeftKey.SetActive(false);
                 SpaceKey.SetActive(false);
             }
-        }
-    }
-
-    public void EnableSignPhone()
-    {
-        sign = signCollider.GetComponent<Sign>();
-        StartCoroutine(sign.SignAction());
-        if (cameraAnimator.GetBool("Pan") == false)
-        {
-            cameraAnimator.SetBool("Pan", true);
-            playerAnimator.SetBool("Sign", true);
-        }
-        if (signAnimator.GetBool("PanelActive") == false)
-        {
-            signAnimator.SetBool("PanelActive", true);
-            playerAnimator.SetBool("Sign", true);
-        }
-    }    
-    public void DisableSignPhone()
-    {
-        sign = signCollider.GetComponent<Sign>();
-        StartCoroutine(sign.SignAction());
-        if (cameraAnimator.GetBool("Pan") == true)
-        {
-            cameraAnimator.SetBool("Pan", false);
-            playerAnimator.SetBool("Sign", false);
-        }
-        if (signAnimator.GetBool("PanelActive") == true)
-        {
-            signAnimator.SetBool("PanelActive", false);
-            playerAnimator.SetBool("Sign", false);
         }
     }
 }
