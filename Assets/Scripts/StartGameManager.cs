@@ -36,10 +36,6 @@ public class StartGameManager : MonoBehaviour
     {
         musicButton.image.sprite = soundSprite;
         mc = GameObject.Find("MobileCheck").GetComponent<MobileCheck>();
-    }
-
-    private void Update()
-    {
         if (mc.isMobile())
         {
             PhoneControls.SetActive(true);
@@ -50,6 +46,11 @@ public class StartGameManager : MonoBehaviour
             PhoneControls.SetActive(false);
             PCControls.SetActive(true);
         }
+    }
+
+    private void Update()
+    {
+
     }
     public void SetSpanish()
     {

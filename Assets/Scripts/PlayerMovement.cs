@@ -67,19 +67,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (mc.isMobile())
         {
-            sign = signCollider.GetComponent<Sign>();
-            StartCoroutine(sign.SignAction());
-            sign.isActive = false;
-            if (cameraAnimator.GetBool("Pan") == false)
-            {
-                cameraAnimator.SetBool("Pan", true);
-                playerAnimator.SetBool("Sign", true);
-            }
-            if (signAnimator.GetBool("PanelActive") == false)
-            {
-                signAnimator.SetBool("PanelActive", true);
-                playerAnimator.SetBool("Sign", true);
-            }
+
         }
         else
         {
@@ -128,12 +116,14 @@ public class PlayerMovement : MonoBehaviour
         {
             if (movingLeft)
             {
+                rb.isKinematic = false;
                 sr.flipX = true;
                 transform.Translate(Vector2.left * (Time.deltaTime * speed), Space.Self);
                 playerAnimator.SetBool("Ismoving", true);
             }
             else if (movingRight)
             {
+                rb.isKinematic = false;
                 sr.flipX = false;
                 transform.Translate(Vector2.right * (Time.deltaTime * speed), Space.Self);
                 playerAnimator.SetBool("Ismoving", true);
@@ -144,6 +134,36 @@ public class PlayerMovement : MonoBehaviour
                 rb.isKinematic = true;
                 playerAnimator.SetBool("Ismoving", false);
             }
+            if (isOnSign)
+            {
+                sign = signCollider.GetComponent<Sign>();
+                StartCoroutine(sign.SignAction());
+                if (cameraAnimator.GetBool("Pan") == false)
+                {
+                    cameraAnimator.SetBool("Pan", true);
+                    playerAnimator.SetBool("Sign", true);
+                }
+                if (signAnimator.GetBool("PanelActive") == false)
+                {
+                    signAnimator.SetBool("PanelActive", true);
+                    playerAnimator.SetBool("Sign", true);
+                }
+            }
+            else
+            {
+                sign = signCollider.GetComponent<Sign>();
+                StartCoroutine(sign.SignAction());
+                if (cameraAnimator.GetBool("Pan") == true)
+                {
+                    cameraAnimator.SetBool("Pan", false);
+                    playerAnimator.SetBool("Sign", false);
+                }
+                if (signAnimator.GetBool("PanelActive") == true)
+                {
+                    signAnimator.SetBool("PanelActive", false);
+                    playerAnimator.SetBool("Sign", false);
+                }
+            }
         }
 
     }
@@ -153,19 +173,7 @@ public class PlayerMovement : MonoBehaviour
         isOnSign = false;
         if (mc.isMobile())
         {
-            sign = signCollider.GetComponent<Sign>();
-            StartCoroutine(sign.SignAction());
-            sign.isActive = true;
-            if (cameraAnimator.GetBool("Pan") == true)
-            {
-                cameraAnimator.SetBool("Pan", false);
-                playerAnimator.SetBool("Sign", false);
-            }
-            if (signAnimator.GetBool("PanelActive") == true)
-            {
-                signAnimator.SetBool("PanelActive", false);
-                playerAnimator.SetBool("Sign", false);
-            }
+
         }
         else
         {
