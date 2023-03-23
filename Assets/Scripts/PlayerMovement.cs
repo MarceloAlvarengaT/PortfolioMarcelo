@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject RightKey;
     public GameObject LeftKey;
-    public GameObject SpaceKey;
+    public GameObject SpaceKey;    
 
     private SpriteRenderer sr;
 
@@ -42,8 +42,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool movingRight = false;
     private bool movingLeft = false;
-
-    public Button mobileButton;
 
     private bool firstTime;
 
