@@ -15,7 +15,7 @@ public class StartGameManager : MonoBehaviour
     public TextMeshProUGUI RightkeyText;
     public TextMeshProUGUI LeftkeyText;
     public TextMeshProUGUI SpacekeyText;
-    public TextMeshProUGUI PhoneText;
+    public Image PhoneRotate;
 
     public Sprite SignSpanish;
     public Sprite SignEnglish;
@@ -37,21 +37,12 @@ public class StartGameManager : MonoBehaviour
     {
         musicButton.image.sprite = soundSprite;
         mc = GameObject.Find("MobileCheck").GetComponent<MobileCheck>();
-        PhoneText.gameObject.SetActive(false);
+        PhoneRotate.gameObject.SetActive(false);
         if (mc.isMobile())
         {
             PhoneControls.SetActive(true);
             PCControls.SetActive(false);
-            PhoneText.gameObject.SetActive(true);
-            if (IsSpanish)
-            {
-                PhoneText.text = "Si estas en celular porfavor usalo horizontalmente para una mejor experiencia";
-            }
-            else
-            {
-                PhoneText.text = "If you are on a cellphone please use it horizontally to have a better experience";
-
-            }
+            PhoneRotate.gameObject.SetActive(true);
         }
         else
         {
