@@ -15,6 +15,7 @@ public class StartGameManager : MonoBehaviour
     public TextMeshProUGUI RightkeyText;
     public TextMeshProUGUI LeftkeyText;
     public TextMeshProUGUI SpacekeyText;
+    public TextMeshProUGUI PhoneText;
 
     public Sprite SignSpanish;
     public Sprite SignEnglish;
@@ -36,10 +37,12 @@ public class StartGameManager : MonoBehaviour
     {
         musicButton.image.sprite = soundSprite;
         mc = GameObject.Find("MobileCheck").GetComponent<MobileCheck>();
+        PhoneText.gameObject.SetActive(false);
         if (mc.isMobile())
         {
             PhoneControls.SetActive(true);
             PCControls.SetActive(false);
+            PhoneText.gameObject.SetActive(true);
         }
         else
         {
@@ -58,6 +61,7 @@ public class StartGameManager : MonoBehaviour
         RightkeyText.text = "Camina hacia la derecha";
         LeftkeyText.text = "Camina hacia la izquierda";
         SpacekeyText.text = "Abrir/Cerrar letreros";
+        PhoneText.text = "Si estas en celular porfavor usalo horizontalmente para una mejor experiencia";
         firstsign.GetComponent<SpriteRenderer>().sprite = SignSpanish;
         PanelAnim.SetBool("Start", true);
         music.Play();
@@ -70,6 +74,7 @@ public class StartGameManager : MonoBehaviour
         RightkeyText.text = "Walk Right";
         LeftkeyText.text = "Walk Left";
         SpacekeyText.text = "Open/Close sign";
+        PhoneText.text = "If you are on a cellphone please use it horizontally to have a better experience";
         firstsign.GetComponent<SpriteRenderer>().sprite = SignEnglish;
         PanelAnim.SetBool("Start", true);
         music.Play();
